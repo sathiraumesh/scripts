@@ -1,0 +1,7 @@
+{
+  "host": "http://localhost:",
+  "port": "8082",
+  "entry": "/repo/api/v1",
+  "username" : "fossy",
+  "password" : "fossy"
+}
