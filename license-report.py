@@ -1,119 +1,14 @@
-import requests
-import uuid
-import time
-from datetime import datetime, timedelta
-
-FOSSOLOGY_SERVER_URL = 'http://localhost:8082/repo/api/v1'
-SERVER_USERNAME = 'fossy'
-SERVER_PASSWORD = 'fossy'
-SERVER_ACCESS_TOKEN = None;
+import json
+from server import Server
 
 
-# Authenticate into the api
-
-def get_sign_token(server_url):
-    auth_endpoint = f'{server_url}/tokens'
-    token_name = uuid.uuid4()
-    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    data = {
-        'username': SERVER_USERNAME,
-        'password': SERVER_PASSWORD,
-        'token_name': token_name,
-        'token_scope': 'write',
-        'token_expire': '2021-02-09'
-    }
-
-    response = requests.post(url=auth_endpoint, headers=headers, data=data);
-    token = response.json()['Authorization']
-    print(token)
-    return token;
-
-
-# upload the generated artifact from the repository
-
-def upload_asset(server_url, access_token, asset_path):
-    upload_endpoint = f'{server_url}/uploads'
-    files = {'fileInput': open(asset_path, 'br')}
-    headers = {
-        'folderId': '1',
-        'uploadDescription': 'License Scan',
-        'public': 'public',
-        'Authorization': access_token,
-
-    }
-    response = requests.post(url=upload_endpoint, headers=headers, files=files)
-    print(response.json())
-    return response.json()['message']
-
-
-
-def schedule_scan(server_url, access_token, asset_id):
-    schedule_agent_endpoint = f'{server_url}/jobs'
-    headers = {
-        'Content-Type': 'application/json',
-        'folderId': '1',
-        'uploadId': str(asset_id),
-        'Authorization': access_token,
-
-    }
-    data = {
-        'analysis': {
-            'bucket': True,
-            'copyright_email_author': True,
-            'ecc': True,
-            'keyword': True,
-            'mime': True,
-            'monk': True,
-            'nomos': True,
-            'package': True,
-            'ojo': True
-
-        },
-        'decider': {
-            'nomos_monk': True,
-            'bulk_reused': True,
-            'new_scanner': True
-        },
-        'reuse': {
-            'reuse_upload': 0,
-            'reuse_group': 0,
-            'reuse_main': True,
-            'reuse_enhanced': True
-        }
-    }
-
-
-    response = requests.post(url=schedule_agent_endpoint, headers=headers, json=data)
-    return response.json()
-
-
-def get_license_findings(server_url, access_token, asset_id):
-    url = f'{server_url}/uploads/{asset_id}/licenses'
-    params = {
-        'agent': 'nomos,monk,ojo',
-        'container': 'true'
-    }
-    headers = {
-        'Content-Type': 'application/json',
-        'Authorization': access_token,
-
-    }
-    response = requests.get(url=url, headers=headers, params=params)
-    return response.json()
-
-
-
-def check_license_scanning_status(server_url, access_token, asset_id):
-    url = f'{server_url}/jobs'
-    params = {
-        'upload': str(asset_id),
-    }
-    headers = {
-        'Authorization': access_token,
-    }
-    response = requests.get(url=url, headers=headers, params=params)
-    return response.json()[0]['status']
-
+server_config_file = open('server.config.json','rb');
+server_config = json.load(server_config_file)
+server = Server(server_config);
+access_token =  server.generate_access_token()
+upload_id = server.upload_asset(access_token,'/Users/sathiraumesh/Downloads/build2/libs/test.jar')
+server.schedule_scanners(access_token,upload_id)
+results = server.get_license_findings(access_token,upload_id)
 
 
 def get_formatted_licenses(findings):
@@ -260,29 +155,7 @@ def generate_report(allowed_licenses, not_allowed_licenses, unclassified_license
         my_file.write("{:<40} {:<100} {:<20} ".format(f'{item["license"]}', f'{item["path"]}', 'ok', ))
         my_file.write("\n")
 
-#
-print("starting license scan")
-# SERVER_ACCESS_TOKEN = get_sign_token(FOSSOLOGY_SERVER_URL)
-# print("sign_in token generated successfully")
-# asset_id = upload_asset(FOSSOLOGY_SERVER_URL,SERVER_ACCESS_TOKEN,'/Users/sathiraumesh/Downloads/build2/libs/test.jar')
-# print("asset upload successful")
-# print(SERVER_ACCESS_TOKEN)
-# code = 0
-# while code!=201 :
-#     result = schedule_scan(FOSSOLOGY_SERVER_URL,SERVER_ACCESS_TOKEN,asset_id)
-#     code = result['code']
-#     print('waiting for the server to generate asset id')
-#     time.sleep(30)
-#
-# print("scan scheduled")
-# status ='processing'
-# while (status.lower() == 'processing'  ) :
-#     status = check_license_scanning_status(FOSSOLOGY_SERVER_URL,SERVER_ACCESS_TOKEN, asset_id)
-#     print(status)
-#     time.sleep(30)
-license_findings = get_license_findings(FOSSOLOGY_SERVER_URL,
-                                      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTI5MTUxOTksIm5iZiI6MTYxMjc0MjQwMCwianRpIjoiTWpNdU13PT0iLCJzY29wZSI6IndyaXRlIn0.zjQhdxgEkSlPGFCRBRbl8KNhwWOM1w3TtfNBYADqmdY',
-                                        80)
+
 
 # test1 = [{'path': 'path', 'licenses': ['Apache-2.0']}, {'path': 'pa', 'licenses': ['GPL-2.0']},
 #          {'path': 'path', 'licenses': ['AGPL-2.0']}]
@@ -290,7 +163,7 @@ license_findings = get_license_findings(FOSSOLOGY_SERVER_URL,
 # test3 = [{'path': 'path', 'licenses': ['Apache-2.0']}, {'path': 'pasdasd', 'licenses': ['MIT', 'GPL', 'GPL-2.0']},
 #          {'path': 'path', 'licenses': ['GPL', 'MIT', 'AGPL']},
 #          {'path': 'path', 'licenses': ['GPL', "classpath-exception"]}]
-formatted_finding_list = get_formatted_licenses(license_findings)
+formatted_finding_list = get_formatted_licenses(results)
 not_allowed_licenses = get_not_allowed_licenses_path(formatted_finding_list)
 print(not_allowed_licenses)
 allowed = get_allowed_licenses(formatted_finding_list)
