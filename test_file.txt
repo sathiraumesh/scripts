@@ -1,24 +1,24 @@
 License                                  Recommendation       Scan Results 
        W3C-possibility                          Allowed              ok
-                  Public-domain                            Allowed              ok
-                  MPL-2.0                                  Allowed              ok
-                  CDDL-1.1                                 Allowed              ok
-                  BSD-3-Clause                             Allowed              ok
-                  LGPL-2.1                                 Allowed              ok
-                  Apache-2.0                               Allowed              ok
-                  Dual-license                             Allowed              ok
-                  CDDL-1.0                                 Allowed              ok
-                  EPL-2.0                                  Allowed              ok
-                  EPL-1.0                                  Allowed              ok
-                  CDDL                                     Allowed              ok
                   Classpath-exception-2.0                  Allowed              ok
-                  MIT                                      Allowed              ok
-                  GPL-2.0+-with-classpath-exception        Allowed              ok
-                  Flora                                    Allowed              ok
                   OpenSSL                                  Allowed              ok
-                  See-URL                                  unclassified         --
-                  See-file                                 unclassified         --
+                  BSD-3-Clause                             Allowed              ok
+                  EPL-1.0                                  Allowed              ok
+                  GPL-2.0+-with-classpath-exception        Allowed              ok
+                  CDDL                                     Allowed              ok
+                  Dual-license                             Allowed              ok
+                  Public-domain                            Allowed              ok
+                  Apache-2.0                               Allowed              ok
+                  MIT                                      Allowed              ok
+                  CDDL-1.0                                 Allowed              ok
+                  LGPL-2.1                                 Allowed              ok
+                  CDDL-1.1                                 Allowed              ok
+                  MPL-2.0                                  Allowed              ok
+                  Flora                                    Allowed              ok
+                  EPL-2.0                                  Allowed              ok
                   See-file.LICENSE                         unclassified         --
+                  See-file                                 unclassified         --
+                  See-URL                                  unclassified         --
                   
 
 

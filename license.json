@@ -1,0 +1,25 @@
+{
+  "allowed-license":[
+  {"license": "MIT", "op": "match"},
+  {"license": "Apache", "op": "match"},
+  {"license": "Public-domain", "op": "match"},
+  {"license": "BSD", "op": "match"},
+  {"license": "CC-BY-2.5", "op": "equal"},
+  {"license": "EDL", "op": "match"},
+  {"license": "EPL", "op": "match"},
+  {"license": "IPL", "op": "match"},
+  {"license": "W3C", "op": "match"},
+  {"license": "OpenSSL", "op": "match"},
+  {"license": "Classpath-exception", "op": "contain"},
+  {"license": "CDDL", "op": "match"},
+  {"license": "LGPL", "op": "match"},
+  {"license": "Flora", "op": "match"},
+  {"license": "MPL", "op": "match"},
+  {"license": "Dual-license", "op": "match"},
+  {"license": "ANTLR-PD", "op": "match"},
+  {"license": "JSON", "op": "match"},
+  {"license": "Unlicense", "op": "match"}
+    ],
+  "rules": ["classpath-exception"]
+
+  }

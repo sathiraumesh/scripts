@@ -57,8 +57,20 @@ class Server:
         print(f'upload id :{upload_id}')
         return upload_id
 
+    def __upload_asset_status(self, access_token, upload_id):
+        upload_status_endpoint = f'{self.__base_url}/jobs'
+        headers = {
+            'Authorization': access_token,
+        }
+        params = {
+            'upload':str(upload_id)
+        }
+        response = requests.get(url=upload_status_endpoint, headers=headers, params=params )
+        return response.json()[0]
 
-    def __schedule_scan_request(self, access_token, upload_id):
+
+
+    def __schedule_scan_request(self, access_token, upload_id,group_id):
         schedule_agent_endpoint = f'{self.__base_url}/jobs'
         headers = {
             'Content-Type': 'application/json',
@@ -87,7 +99,7 @@ class Server:
             },
             'reuse': {
                 'reuse_upload': 0,
-                'reuse_group': 0,
+                'reuse_group': group_id,
                 'reuse_main': True,
                 'reuse_enhanced': True
             }
@@ -98,13 +110,16 @@ class Server:
         return response.json()
 
     def schedule_scanners(self, access_token, upload_id):
-        print("scheduling scanners started")
-        type =''
-        while type != 'INFO':
-            result =self.__schedule_scan_request(access_token,upload_id)
-            type = result['type']
-            print('waiting for the server to schedule scanners')
+        status ='Processing'
+        grou_id=0
+        while status == 'Processing':
+            result =self.__upload_asset_status(access_token,upload_id)
+            status = result['status']
+            group_id = result['groupId']
+            print('waiting for the server to complete upload processing')
             time.sleep(self.__server_ping)
+        print("scheduling scanners started")
+        self.__schedule_scan_request(access_token,upload_id,group_id)
         print("scheduling scanners successful")
 
 
@@ -142,6 +157,7 @@ class Server:
         print("getting results started")
         response = requests.get(url=url, headers=headers, params=params)
         print("getting results completed")
+        # print('response.json()')
         return response.json()
 
     def get_access_token(self):
