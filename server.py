@@ -53,6 +53,7 @@ class Server:
         print("uploading asset started")
         response = requests.post(url=upload_endpoint, headers=headers, files=files)
         print("uploading asset successful")
+        print(response.json())
         upload_id = response.json()['message']
         print(f'upload id :{upload_id}')
         return upload_id

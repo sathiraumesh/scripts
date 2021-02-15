@@ -53,7 +53,42 @@ class Analyser:
                 not_allowed_licenses.append(unique_license)
         return {'allowed-licenses':allowed_licenses,'not-allowed-licenses':not_allowed_licenses}
 
+
     def get_decisions_on_not_allowed_licenses(self, not_allowed_licenses, formatted_licenses):
+        not_allowed_licenses_info=[]
         recommended_licenses_file = open('license.json', 'rb')
         data = json.load(recommended_licenses_file)
         rules = data['rules']
+
+        for item in formatted_licenses:
+            licenses = item['licenses']
+            path = item['path']
+            conclusion = item['conclusion']
+            if (len(licenses) == 1):
+                license = str(licenses[0])
+                for not_allowed_license in not_allowed_licenses:
+                    license_decision=(license.lower().__eq__(str(not_allowed_license).lower()))
+                    if (license_decision):
+                        not_allowed_licenses_info.append({'path': path, 'license': license,'conclusion':conclusion})
+                        break
+            elif(len(licenses) > 1):
+                is_not_allowed_license = False
+                is_rule = False
+                multiple_license = []
+                for not_allowed_license in not_allowed_licenses:
+                    for license in licenses:
+                        license_decision=license.lower().__eq__(str(not_allowed_license).lower())
+                        if (license_decision):
+                            is_not_allowed_license = True
+                            multiple_license.append(license)
+                        else:
+                            for rule in rules:
+                                rule_decision= license.lower().startswith(str(rule).lower())
+                                if(rule_decision):
+                                    is_rule = True
+                                    break
+                if (is_not_allowed_license == True and is_rule == False):
+                    for license in multiple_license:
+                        not_allowed_licenses_info.append({'path': path, 'license': license,'conclusion':conclusion})
+
+        return not_allowed_licenses_info

@@ -1,25 +1,60 @@
 License                                  Recommendation       Scan Results 
-       W3C-possibility                          Allowed              ok
-                  Classpath-exception-2.0                  Allowed              ok
-                  OpenSSL                                  Allowed              ok
-                  BSD-3-Clause                             Allowed              ok
+       MIT                                      Allowed              ok
+                  MIT-style                                Allowed              ok
                   EPL-1.0                                  Allowed              ok
-                  GPL-2.0+-with-classpath-exception        Allowed              ok
-                  CDDL                                     Allowed              ok
+                  BSD-3-Clause                             Allowed              ok
+                  EPL-2.0                                  Allowed              ok
                   Dual-license                             Allowed              ok
                   Public-domain                            Allowed              ok
-                  Apache-2.0                               Allowed              ok
-                  MIT                                      Allowed              ok
-                  CDDL-1.0                                 Allowed              ok
-                  LGPL-2.1                                 Allowed              ok
-                  CDDL-1.1                                 Allowed              ok
+                  BSD-2-Clause                             Allowed              ok
+                  CDDL                                     Allowed              ok
+                  BSD                                      Allowed              ok
+                  OpenSSL                                  Allowed              ok
+                  JSON                                     Allowed              ok
+                  Unlicense                                Allowed              ok
                   MPL-2.0                                  Allowed              ok
-                  Flora                                    Allowed              ok
-                  EPL-2.0                                  Allowed              ok
-                  See-file.LICENSE                         unclassified         --
-                  See-file                                 unclassified         --
-                  See-URL                                  unclassified         --
+                  Classpath-exception-2.0                  Allowed              ok
+                  Apache-2.0                               Allowed              ok
+                  LGPL-2.1                                 Allowed              ok
+                  CC-BY-2.5                                Allowed              ok
+                  EDL-1.0                                  Allowed              ok
+                  ANTLR-PD                                 Allowed              ok
+                  W3C-possibility                          Allowed              ok
+                  GPL-3.0+                                 Not Allowed          --
+                  GPL-2.0                                  Not Allowed          --
+                  See-URL                                  Not Allowed          --
+                  UnclassifiedLicense                      Not Allowed          --
+                  See-file                                 Not Allowed          --
+                  GPL                                      Not Allowed          --
+                  See-doc.OTHER                            Not Allowed          --
+                  No_license_found                         Not Allowed          --
                   
 
 
 License                                  Location                                                                                             Reason               
+See-URL                                  oms-core.jar/org/springframework/security/jackson2/SecurityJackson2Modules$WhitelistTypeIdResolver.class ok                   
+See-URL                                  oms-core.jar/org/slf4j/MDC.class                                                                     ok                   
+See-URL                                  oms-core.jar/org/slf4j/LoggerFactory.class                                                           ok                   
+UnclassifiedLicense                      oms-core.jar/org/keycloak/adapters/KeycloakDeploymentBuilder.class                                   ok                   
+See-doc.OTHER                            oms-core.jar/org/codehaus/groovy/transform/ImmutableASTTransformation.class                          ok                   
+See-file                                 oms-core.jar/org/apache/http/impl/client/MinimalHttpClient$1.class                                   ok                   
+See-file                                 oms-core.jar/org/apache/http/impl/client/InternalHttpClient$1.class                                  ok                   
+See-URL                                  oms-core.jar/META-INF/resources/webjars/springfox-swagger-ui/swagger-ui.js.map                       ok                   
+GPL-3.0+                                 oms-core.jar/META-INF/licenses/antlr2-license.txt                                                    ok                   
+UnclassifiedLicense                      oms-core.jar/lombok/core/Main.SCL.lombok                                                             ok                   
+GPL                                      oms-core.jar/lombok/core/Main$LicenseApp.SCL.lombok                                                  ok                   
+See-URL                                  oms-core.jar/liquibase/sdk/watch/js/jquery-1.11.0.min.js                                             ok                   
+See-file                                 oms-core.jar/liquibase/sdk/vagrant/supplier/db2/db2expc_install.linux.rsp.vm                         ok                   
+GPL-2.0                                  oms-core.jar/dist/liquibase.spec                                                                     ok                   
+See-file                                 oms-core.jar/dist/sdk/vagrant/install-files/README.txt                                               ok                   
+See-URL                                  oms-core.jar/com/netflix/hystrix/HystrixRequestLog.class                                             ok                   
+See-URL                                  oms-core.jar/ch/qos/logback/core/joran/action/AppenderRefAction.class                                ok                   
+See-file                                 oms-core.jar/ch/qos/logback/classic/db/script/sybaseSqlAnywhere.sql                                  ok                   
+See-file                                 oms-core.jar/ch/qos/logback/classic/db/script/sqllite.sql                                            ok                   
+See-file                                 oms-core.jar/ch/qos/logback/classic/db/script/postgresql.sql                                         ok                   
+See-file                                 oms-core.jar/ch/qos/logback/classic/db/script/oracle.sql                                             ok                   
+See-file                                 oms-core.jar/ch/qos/logback/classic/db/script/mysql.sql                                              ok                   
+See-file                                 oms-core.jar/ch/qos/logback/classic/db/script/mssql.sql                                              ok                   
+See-file                                 oms-core.jar/ch/qos/logback/classic/db/script/hsqldb.sql                                             ok                   
+See-file                                 oms-core.jar/ch/qos/logback/classic/db/script/h2.sql                                                 ok                   
+See-file                                 oms-core.jar/ch/qos/logback/classic/db/script/db2.sql                                                ok                   
